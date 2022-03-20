@@ -24,7 +24,7 @@ app.get("/data", (req, res) => {
         url: "https://api.coinranking.com/v2/coins?limit=100",
         headers: {
             "x-access-token":
-                "coinranking19759dda7c96a7c6de698bcf410c5fa15e5bb8840d065f46",
+                "xxxxxxxxxxxxxxxxxx",
         },
     };
     request(options, function (error, response) {
