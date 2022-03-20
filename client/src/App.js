@@ -1,8 +1,11 @@
 import "./App.css";
 import { useQuery } from "react-query";
 import { useState } from "react";
+import Table from "./table";
 function App() {
     const [coinData, setCoinData] = useState({});
+    const [pageLimit, setPageLimit] = useState(0);
+    const [page, setPage] = useState(0);
     const { isLoading, error, data } = useQuery(
         "repoData",
         () =>
@@ -11,7 +14,10 @@ function App() {
             ),
         {
             refetchInterval: 2000,
-            onSuccess: setCoinData,
+            onSuccess: (data) => {
+                setCoinData(data);
+                setPageLimit(data);
+            },
         }
     );
 
@@ -21,41 +27,7 @@ function App() {
 
     return (
         <div className="App-header">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Currency Rank</th>
-                        <th>Currency Name</th>
-                        <th>Currency Symbol</th>
-                        <th>Currency Price</th>
-                        <th>Currency Price Change</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {coinData.data.coins &&
-                        coinData.data.coins.map((elem, index) => {
-                            return (
-                                <tr key ={index}>
-                                    <td data-column="Currency Rank">
-                                        {elem.rank}
-                                    </td>
-                                    <td data-column="Currency Name">
-                                        {elem.name}
-                                    </td>
-                                    <td data-column="Currency Symbol">
-                                        {elem.symbol}
-                                    </td>
-                                    <td data-column="Currency Price">
-                                        {elem.price}
-                                    </td>
-                                    <td data-column="Currency Price Change">
-                                        {elem.change}%
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                </tbody>
-            </table>
+            <Table data={coinData.data.coins} />
             {/* {console.log(coinData)} */}
         </div>
     );
