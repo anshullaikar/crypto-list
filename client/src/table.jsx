@@ -2,9 +2,9 @@ function Table({data}) {
     return (<table>
         <thead>
             <tr>
-                <th>Currency Rank</th>
-                <th>Currency Name</th>
-                <th>Currency Symbol</th>
+                <th style={{width: "75px"}}>Currency Rank</th>
+                <th style={{width: "400px"}}>Currency Name</th>
+                <th style={{width:"75px"}}>Currency Symbol</th>
                 <th>Currency Price</th>
                 <th>Currency Price Change</th>
             </tr>
