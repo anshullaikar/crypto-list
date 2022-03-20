@@ -6,13 +6,13 @@ function PaginatedTable({ itemsPerPage, data }) {
     const [currentData, setCurrentData] = useState(null);
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
-
+    
     useEffect(() => {
         const endOffset = itemOffset + itemsPerPage;
         console.log(`Loading items from ${itemOffset} to ${endOffset}`);
         setCurrentData(data.slice(itemOffset, endOffset));
         setPageCount(Math.ceil(data.length / itemsPerPage));
-    }, [itemOffset, itemsPerPage]);
+    }, [itemOffset, itemsPerPage, data]);
 
     const handlePageClick = (event) => {
         const newOffset = (event.selected * itemsPerPage) % data.length;
