@@ -9,7 +9,7 @@ function App() {
     const { isLoading, error, data } = useQuery(
         "repoData",
         () =>
-            fetch("http://localhost:5000/testing").then((response) =>
+            fetch("http://localhost:5000/data").then((response) =>
                 response.json()
             ),
         {
