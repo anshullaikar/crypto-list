@@ -1,6 +1,6 @@
 import "./App.css";
 import { useQuery } from "react-query";
-
+import {useState} from "react"
 function App() {
     const [coinData, setCoinData] = useState({});
     const { isLoading, error, data } = useQuery(
