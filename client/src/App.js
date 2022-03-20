@@ -2,10 +2,17 @@ import "./App.css";
 import { useQuery } from "react-query";
 
 function App() {
-    const { isLoading, error, data } = useQuery("repoData", () =>
-        fetch("http://localhost:5000/express_backend").then((response) =>
-            response.json()
-        )
+    const [coinData, setCoinData] = useState({});
+    const { isLoading, error, data } = useQuery(
+        "repoData",
+        () =>
+            fetch("http://localhost:5000/data").then((response) =>
+                response.json()
+            ),
+        {
+            refetchInterval: 2000,
+            onSuccess: setCoinData,
+        }
     );
 
     if (isLoading) return "Loading...";
@@ -15,7 +22,7 @@ function App() {
     return (
         <div className="App-header">
             <div></div>
-            {console.log(data)}
+            {console.log(coinData)}
         </div>
     );
 }
