@@ -2,11 +2,17 @@ import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import Table from "./table";
 
-function PaginatedTable({ itemsPerPage, data, setSettings }) {
+function PaginatedTable({
+    itemsPerPage,
+    data,
+    setSettings,
+    resetPage = false,
+}) {
     const [currentData, setCurrentData] = useState(null);
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
     useEffect(() => {
+        if (resetPage) handlePageClick({ selected: 1 });
         const endOffset = itemOffset + itemsPerPage;
         console.log(`Loading items from ${itemOffset} to ${endOffset}`);
         setCurrentData(data.slice(itemOffset, endOffset));
@@ -23,7 +29,8 @@ function PaginatedTable({ itemsPerPage, data, setSettings }) {
 
     return (
         <>
-            <Table data={currentData} setSettings={setSettings}/> {/*prop drilling since setting up redux for one prop is very uneccessary in my opinion*/}
+            <Table data={currentData} setSettings={setSettings} />{" "}
+            {/*prop drilling since setting up redux for one prop is very uneccessary in my opinion*/}
             <ReactPaginate
                 nextLabel=">"
                 onPageChange={handlePageClick}

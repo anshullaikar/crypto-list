@@ -72,6 +72,7 @@ function App() {
                                 .includes(searchValue.toLowerCase())
                         );
                     })}
+                    resetPage={true}
                     setSettings={setSettings}
                 />
             )}
