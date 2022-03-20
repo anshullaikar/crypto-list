@@ -1,11 +1,9 @@
 import "./App.css";
 import { useQuery } from "react-query";
 import { useState } from "react";
-import Table from "./table";
+import PaginatedTable from "./PaginatedTable";
 function App() {
-    const [coinData, setCoinData] = useState({});
-    const [pageLimit, setPageLimit] = useState(0);
-    const [page, setPage] = useState(0);
+    const [coinData, setCoinData] = useState(null);
     const { isLoading, error, data } = useQuery(
         "repoData",
         () =>
@@ -16,7 +14,6 @@ function App() {
             refetchInterval: 2000,
             onSuccess: (data) => {
                 setCoinData(data);
-                setPageLimit(data);
             },
         }
     );
@@ -27,7 +24,7 @@ function App() {
 
     return (
         <div className="App-header">
-            <Table data={coinData.data.coins} />
+            <PaginatedTable itemsPerPage={10} data={coinData.data.coins} />
             {/* {console.log(coinData)} */}
         </div>
     );
