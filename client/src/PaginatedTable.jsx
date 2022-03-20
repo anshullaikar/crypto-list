@@ -2,17 +2,16 @@ import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import Table from "./table";
 
-function PaginatedTable({ itemsPerPage, data }) {
+function PaginatedTable({ itemsPerPage, data, setSettings }) {
     const [currentData, setCurrentData] = useState(null);
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useState(0);
-    
     useEffect(() => {
         const endOffset = itemOffset + itemsPerPage;
         console.log(`Loading items from ${itemOffset} to ${endOffset}`);
         setCurrentData(data.slice(itemOffset, endOffset));
         setPageCount(Math.ceil(data.length / itemsPerPage));
-    }, [itemOffset, itemsPerPage, data]);
+    }, [itemOffset, itemsPerPage, data]); //checking if data is changing as well to account for search component
 
     const handlePageClick = (event) => {
         const newOffset = (event.selected * itemsPerPage) % data.length;
@@ -24,7 +23,7 @@ function PaginatedTable({ itemsPerPage, data }) {
 
     return (
         <>
-            <Table data={currentData} />
+            <Table data={currentData} setSettings={setSettings}/> {/*prop drilling because dont have time to add redux*/}
             <ReactPaginate
                 nextLabel=">"
                 onPageChange={handlePageClick}

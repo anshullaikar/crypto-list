@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { useState } from "react";
 import PaginatedTable from "./PaginatedTable";
 function App() {
+    const [settings, setSettings] = useState(null);
     const [coinData, setCoinData] = useState(null);
     const [searchValue, setSearchValue] = useState("");
     const { isLoading, error, data } = useQuery(
@@ -14,7 +15,22 @@ function App() {
         {
             refetchInterval: 2000,
             onSuccess: (data) => {
-                setCoinData(data);
+                let dataToSet = data.data.coins;
+                if (settings) {
+                    if (settings.type == "asc") {
+                        setCoinData(
+                            dataToSet.sort(function (a, b) {
+                                return a[settings.value] - b[settings.value];
+                            })
+                        );
+                    } else if (settings.type == "desc") {
+                        setCoinData(
+                            dataToSet.sort(function (a, b) {
+                                return b[settings.value] - a[settings.value];
+                            })
+                        );
+                    }
+                } else setCoinData(dataToSet);
             },
         }
     );
@@ -37,24 +53,26 @@ function App() {
                 name="search"
                 id="search-bar"
             />
-            {console.log(searchValue == "", coinData.data.coins[0].name.includes(searchValue))}
-            {console.log(coinData.data.coins.filter((elem) => {
-                        return (
-                            elem.name.includes(searchValue) ||
-                            elem.symbol.includes(searchValue)
-                        );
-                    }))}
-            {searchValue == "" ? (
-                <PaginatedTable itemsPerPage={10} data={coinData.data.coins} />
+            {searchValue === "" ? (
+                <PaginatedTable
+                    itemsPerPage={10}
+                    data={coinData}
+                    setSettings={setSettings}
+                />
             ) : (
                 <PaginatedTable
                     itemsPerPage={10}
-                    data={coinData.data.coins.filter((elem) => {
+                    data={coinData.filter((elem) => {
                         return (
-                            elem.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-                            elem.symbol.toLowerCase().includes(searchValue.toLowerCase())
+                            elem.name
+                                .toLowerCase()
+                                .includes(searchValue.toLowerCase()) ||
+                            elem.symbol
+                                .toLowerCase()
+                                .includes(searchValue.toLowerCase())
                         );
                     })}
+                    setSettings={setSettings}
                 />
             )}
 
