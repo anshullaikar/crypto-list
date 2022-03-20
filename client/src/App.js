@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { useState } from "react";
 import PaginatedTable from "./PaginatedTable";
 function App() {
-    const [settings, setSettings] = useState(null);
+    const [settings, setSettings] = useState(null); 
     const [coinData, setCoinData] = useState(null);
     const [searchValue, setSearchValue] = useState("");
     const { isLoading, error, data } = useQuery(

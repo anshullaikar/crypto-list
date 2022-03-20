@@ -23,7 +23,7 @@ function PaginatedTable({ itemsPerPage, data, setSettings }) {
 
     return (
         <>
-            <Table data={currentData} setSettings={setSettings}/> {/*prop drilling because dont have time to add redux*/}
+            <Table data={currentData} setSettings={setSettings}/> {/*prop drilling since setting up redux for one prop is very uneccessary in my opinion*/}
             <ReactPaginate
                 nextLabel=">"
                 onPageChange={handlePageClick}
